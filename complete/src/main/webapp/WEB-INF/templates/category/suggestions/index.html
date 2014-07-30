@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="stylesTemplate">
+<title>Category Suggestions</title>
+</head>
+<head th:include="jsTemplate"></head>
+
+<body>
+	<!-- Header file -->
+	<div th:replace="headerTemplate"></div>
+
+	<!-- Main Content Starts -->
+	<div class="content">
+		<div class="container">
+			<div class="register">
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<h2>Category Suggestions</h2>
+					</div>
+					<br />
+					<br />
+					<div class="col-md-12 col-sm-12" style="padding-top: 10px">
+						<div class="formy">
+							<div class="form">
+								<!-- Register form (not working)-->
+								<form class="form-horizontal" action="#" th:action="@{/category/suggestions/view}" method="post">
+									<!-- Name -->
+									<div class="form-group">
+										<label class="control-label col-md-3" for="name">Enter
+											the product title</label>
+										<div class="col-md-9">
+											<input type="text" class="form-control" id="pTitle" />
+										</div>
+									</div>
+									<!-- Buttons -->
+									<div class="form-group">
+										<!-- Buttons -->
+										<div class="col-md-9 col-md-offset-3">
+											<button type="submit" class="btn btn-default">View
+												Suggestions</button>
+											<button type="reset" class="btn btn-default">Reset</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer file -->
+	<div th:replace="footerTemplate :: footer"></div>
+</body>
+</html>

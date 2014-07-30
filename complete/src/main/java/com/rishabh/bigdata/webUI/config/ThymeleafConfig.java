@@ -18,6 +18,11 @@ class ThymeleafConfig {
     	mResolver.setSuffix(".html");
     	mResolver.setTemplateMode("HTML5");
     	
+    	mResolver.addTemplateAlias("headerTemplate", "common/header");
+    	mResolver.addTemplateAlias("footerTemplate", "common/footer");
+    	mResolver.addTemplateAlias("stylesTemplate", "common/styles");
+    	mResolver.addTemplateAlias("jsTemplate", "common/js");
+    	
         return mResolver;
     }
  

@@ -1,47 +1,43 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<!-- Title here -->
-<title>Metro Mania</title>
-
-<!-- Description, Keywords and Author -->
-<meta name="description" content="Your description" />
-<meta name="keywords" content="Your,Keywords" />
-<meta name="author" content="ResponsiveWebInc" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!-- Styles -->
-
-<!-- <link rel="stylesheet" th:href="@{/css/main.css}" />
-<link rel="stylesheet" href="/css/main.css" />
--->
-
-<!-- Bootstrap CSS -->
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-<!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
-<link rel="stylesheet" th:href="@{/css/settings.css}" media="screen" />
-<!-- Pretty Photo CSS -->
-<link th:href="@{/css/prettyPhoto.css}" rel="stylesheet" />
-<!-- Parallax slider -->
-<link rel="stylesheet" th:href="@{/css/slider.css}" />
-<!-- Flexslider -->
-<link rel="stylesheet" th:href="@{/css/flexslider.css}" />
-<!-- Font awesome CSS -->
-<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
-<!-- Custom CSS -->
-<link th:href="@{/css/style.css}" rel="stylesheet" />
-<!-- Colors - Orange, Purple, Light Blue (lblue), Red, Green and Blue -->
-<link th:href="@{/css/lblue.css}" rel="stylesheet" />
-
-<!-- Favicon -->
-<link rel="shortcut icon" th:href="@{/img/favicon/favicon.png}" />
-
+<head th:include="stylesTemplate">
+<title>Index</title>
 </head>
+<head th:include="jsTemplate"></head>
+
 <body>
-	<form action="backupCollection/" method="get">
-		<p class="blockquote">This is a test text</p>
-	</form>
+	<!-- Header file -->
+	<div th:replace="headerTemplate"></div>
+	<!-- Main Content Starts -->
+	<div class="content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+
+					<!-- Image blocks starts -->
+
+					<ul class="hover-block">
+
+						<li><a th:href="@{/category/suggestions}"> <!-- Image --> <img
+								class="img-responsive" th:attr="src=@{/img/categories_suggest.png}" alt="" />
+								<!-- Content with background color Class -->
+								<div class="hover-content b-orange" style="top: 155px;">
+									<h6>Category Recommendations</h6>
+									Click here to see the recommendations for a particular category 
+								</div>
+						</a></li>
+					</ul>
+
+					<div class="clearfix"></div>
+
+					<!-- Image blocks ends -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer file -->
+	<div th:replace="footerTemplate :: footer"></div>
 </body>
+
 </html>

@@ -1,0 +1,50 @@
+<head xmlns:th="http://www.thymeleaf.org">
+<!-- Javascript files -->
+<!-- jQuery -->
+<script th:attr="src=@{/js/jquery.js}"></script>
+<!-- Bootstrap JS -->
+<script th:attr="src=@{/js/bootstrap.min.js}"></script>
+<!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+<script th:attr="src=@{/js/jquery.themepunch.plugins.min.js}"></script>
+<script th:attr="src=@{/js/jquery.themepunch.revolution.min.js}"></script>
+<!-- Isotope for gallery -->
+<script th:attr="src=@{/js/jquery.isotope.js}"></script>
+<!-- prettyPhoto for images -->
+<script th:attr="src=@{/js/jquery.prettyPhoto.js}"></script>
+<!-- Parallax slider -->
+<script th:attr="src=@{/js/jquery.cslider.js}"></script>
+<script th:attr="src=@{/js/modernizr.custom.28468.js}"></script>
+<!-- Filter for support page -->
+<script th:attr="src=@{/js/filter.js}"></script>
+<!-- Cycle slider -->
+<script th:attr="src=@{/js/cycle.js}"></script>
+<!-- Flex slider -->
+<script th:attr="src=@{/js/jquery.flexslider-min.js}"></script>
+<!-- Easing -->
+<script th:attr="src=@{/js/easing.js}"></script>
+<!-- Respond JS for IE8 -->
+<script th:attr="src=@{/js/respond.min.js}"></script>
+<!-- HTML5 Support for IE -->
+<script th:attr="src=@{/js/html5shiv.js}"></script>
+<!-- Custom JS -->
+<script th:attr="src=@{/js/custom.js}"></script>
+<script>
+	// Revolution Slider
+	var revapi;
+	jQuery(document).ready(function() {
+		revapi = jQuery('.tp-banner').revolution({
+			delay : 9000,
+			startwidth : 1200,
+			startheight : 500,
+			hideThumbs : 200,
+			shadow : 0,
+			navigationType : "none",
+			hideThumbsOnMobile : "on",
+			hideArrowsOnMobile : "on",
+			hideThumbsUnderResoluition : 0,
+			touchenabled : "on",
+			fullWidth : "on"
+		});
+	});
+</script>
+</head>
