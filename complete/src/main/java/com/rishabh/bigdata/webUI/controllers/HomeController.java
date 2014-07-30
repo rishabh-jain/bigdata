@@ -18,7 +18,11 @@ public class HomeController {
     	return "index";
     }
 	
-    @RequestMapping(value="/backupCollection", method=RequestMethod.GET, params="collection")
+	
+	
+	
+	
+    /*@RequestMapping(value="/backupCollection", method=RequestMethod.GET, params="collection")
     public String backupCollection(@RequestParam(value="collection", required=false)String collectionName, Model model) {
     	String mBackupResult = MongoManager.getInstance("localhost", "RipTideEbayData").backupData(collectionName);
     	
@@ -29,5 +33,5 @@ public class HomeController {
     	}	
     	
         return "home";
-    }
+    }*/
 }
