@@ -1,13 +1,17 @@
 package com.rishabh.bigdata.log;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class Logger {
 
@@ -39,7 +43,7 @@ public class Logger {
 				+ cal_for_month + cal_for_year);
 
 		if (!mLogDirectory.exists())
-			mLogDirectory.mkdir();
+			mLogDirectory.mkdirs();
 
 		mErrorLogFile = new File(mLogDirectory.getAbsolutePath()
 				+ System.getProperty("file.separator") + "error" + ".log");
@@ -74,12 +78,13 @@ public class Logger {
 	public boolean logError(String mTitle, String mDetails) {
 		try {
 			cal = Calendar.getInstance();
-			
+
 			mLogFileStream = new FileOutputStream(mErrorLogFile, true);
 
 			mLogTime = cal.getTime().toString();
-			
-			mLog = System.getProperty("line.separator") + mLogTime + " -> " + mTitle + " -- " + mDetails;
+
+			mLog = System.getProperty("line.separator") + mLogTime + " -> "
+					+ mTitle + " -- " + mDetails;
 			mLogFileStream.write(mLog.getBytes());
 
 			return true;
@@ -100,8 +105,9 @@ public class Logger {
 			mLogFileStream = new FileOutputStream(mInfoLogFile, true);
 
 			mLogTime = cal.getTime().toString();
-			
-			mLog = System.getProperty("line.separator") + mLogTime + " -> " + mTitle + " -- " + mDetails;
+
+			mLog = System.getProperty("line.separator") + mLogTime + " -> "
+					+ mTitle + " -- " + mDetails;
 			mLogFileStream.write(mLog.getBytes());
 
 			return true;
@@ -111,5 +117,86 @@ public class Logger {
 		}
 
 		return false;
+	}
+
+	/*
+	 * Gets the log directories list
+	 */
+	public List<String> getLogDirectories() {
+		File mLogParentDirectory = new File(mPath + "BigData-Logs");
+
+		String[] logDirectories = mLogParentDirectory.list();
+
+		List<String> mLogDirectoriesList = new ArrayList<String>();
+
+		for (String logDirectory : logDirectories) {
+			if (!logDirectory.contains(".")) {
+				mLogDirectoriesList.add(logDirectory);
+			}
+		}
+
+		return mLogDirectoriesList;
+	}
+
+	public StringBuffer getErrorLogs(String mLogDir) {
+		try {
+			StringBuffer mErrorBuffer = new StringBuffer();
+
+			File mErrorFile = new File(mPath + "BigData-Logs"
+					+ System.getProperty("file.separator") + mLogDir
+					+ System.getProperty("file.separator") + "error.log");
+
+			FileInputStream mErrorLogsStream = new FileInputStream(mErrorFile);
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					mErrorLogsStream));
+
+			String mLogLine;
+
+			while ((mLogLine = br.readLine()) != null) {
+				mErrorBuffer.append(mLogLine
+						+ System.getProperty("line.separator"));
+			}
+
+			return mErrorBuffer;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public StringBuffer getInfoLogs(String mLogDir) {
+		try {
+			StringBuffer mInfoBuffer = new StringBuffer();
+			FileInputStream mInfoLogsStream = new FileInputStream(
+					new File(mPath + "BigData-Logs"
+							+ System.getProperty("file.separator") + mLogDir
+							+ System.getProperty("file.separator") + "info.log"));
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					mInfoLogsStream));
+
+			String mLogLine;
+
+			while ((mLogLine = br.readLine()) != null) {
+				mInfoBuffer.append(mLogLine
+						+ System.getProperty("line.separator"));
+			}
+
+			return mInfoBuffer;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

@@ -1,4 +1,4 @@
-package com.rishabh.bigdata.hadoop;
+package com.rishabh.bigdata.hadoop_old;
 
 import java.io.IOException;
 import java.util.StringTokenizer;

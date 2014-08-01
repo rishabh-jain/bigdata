@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="stylesTemplate">
+<title>Logs</title>
+</head>
+<head th:include="jsTemplate"></head>
+
+<body>
+	<!-- Header file -->
+	<div th:replace="headerTemplate"></div>
+	<!-- Main Content Starts -->
+	<div class="content">
+		<div class="container">
+			<h2>Server Logs - <span class="color" th:text="${logDir}"></span></h2>
+			<p class="big grey">All logs</p>
+			<hr />
+			<div class="row">
+				<div class="col-md-12">
+					<h4>Errors</h4>
+					<div class="form">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<div class="col-md-12">
+									<textarea class="form-control" id="error_logs" rows="10"
+										th:text="${errorLogs}" contenteditable="false"></textarea>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<h4>Information</h4>
+					<div class="form">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<div class="col-md-12">
+									<textarea class="form-control" id="info_logs" rows="10"
+										th:text="${infoLogs}" contenteditable="false"></textarea>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer file -->
+	<div th:replace="footerTemplate :: footer"></div>
+</body>
+
+</html>

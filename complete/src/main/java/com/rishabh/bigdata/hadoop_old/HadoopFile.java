@@ -1,4 +1,4 @@
-package com.rishabh.bigdata.hadoop;
+package com.rishabh.bigdata.hadoop_old;
 
 public class HadoopFile {
 	public String mTitle;

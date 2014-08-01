@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.rishabh.bigdata.hadoop.HadoopManager;
+
 @Controller
 public class SuggestionsController {
 	@RequestMapping(value = "/category/suggestions", method = RequestMethod.GET)
@@ -19,6 +21,8 @@ public class SuggestionsController {
 	
 	@RequestMapping(value="/category/suggestions/view", method=RequestMethod.POST, params="pTitle")
     public String category_view(@RequestParam(value="pTitle", required=false)String mProductTitle, Model model) {
+		HadoopManager.getInstance().getSuggestions("Sari");
+		
     	StringTokenizer mTokenizer = new StringTokenizer(mProductTitle, " ");
     	
     	List<String> mTokenList = new ArrayList<String>();

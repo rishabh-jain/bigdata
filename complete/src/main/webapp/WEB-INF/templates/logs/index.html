@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="stylesTemplate">
+<title>Logs</title>
+</head>
+<head th:include="jsTemplate"></head>
+
+<body>
+	<!-- Header file -->
+	<div th:replace="headerTemplate"></div>
+	<!-- Main Content Starts -->
+	<div class="content">
+		<div class="container">
+			<h2>Server Logs</h2>
+			<p class="big grey">View all the server logs per date</p>
+			<hr />
+			<div class="row">
+				<div class="col-md-12">
+					<table class="table table-striped table-hover table-bordered">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Logs Directory</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="logDirectory,iterStat : ${logDirectories}">
+								<td th:text="${iterStat.count}">1</td>
+								<td th:text="${logDirectory}">12345</td>
+								<td class="button"><a th:href="@{/logs/view(dir=${logDirectory})}"><i class="fa fa-folder"></i> View logs</a></td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer file -->
+	<div th:replace="footerTemplate :: footer"></div>
+</body>
+
+</html>

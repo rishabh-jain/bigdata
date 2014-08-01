@@ -11,9 +11,9 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
-import com.rishabh.bigdata.hadoop.HDFSFileType;
-import com.rishabh.bigdata.hadoop.HadoopFile;
-import com.rishabh.bigdata.hadoop.HadoopManager;
+import com.rishabh.bigdata.hadoop_old.HDFSFileType;
+import com.rishabh.bigdata.hadoop_old.HadoopFile;
+import com.rishabh.bigdata.hadoop_old.HadoopManager;
 import com.rishabh.bigdata.log.Logger;
 
 public class MongoManager {
