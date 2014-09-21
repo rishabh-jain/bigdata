@@ -2,6 +2,7 @@ package com.rishabh.bigdata.mongo;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -11,6 +12,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.WriteConcern;
 import com.rishabh.bigdata.hadoop_old.HDFSFileType;
 import com.rishabh.bigdata.hadoop_old.HadoopFile;
 import com.rishabh.bigdata.hadoop_old.HadoopManager;
@@ -47,11 +49,35 @@ public class MongoManager {
 		return _me;
 	}
 
+	public void writeDataToCollection(String mCollectionName,
+			List<String> mKeyList, List<String[]> mDataList) {
+		try {
+			mCollection = mAnalysisDatabase.getCollection(mCollectionName);
+			Logger.getInstance().logInfo("Mongo Write Data To Collection",
+					mCollection.getFullName());
+
+			for (String[] mData : mDataList) {
+				mDBObject = new BasicDBObject();
+
+				for (int loop = 0; loop < mKeyList.size(); loop++) {
+					mDBObject.put(mKeyList.get(loop), mData[loop]);
+				}
+				mCollection.insert(mDBObject, WriteConcern.NORMAL);
+			}
+			
+			Logger.getInstance().logInfo("Mongo Write Data To Collection", "Data written successfully to collection");
+			
+		} catch (Exception e) {
+			Logger.getInstance().logError("Mongo Write Data to Collection",
+					e.getMessage());
+		}
+	}
+
 	public HadoopFile getCollectionKeys(String mCollectionName) {
 		mCollection = mAnalysisDatabase.getCollection(mCollectionName);
 
 		int pageSize = 500;
-		
+
 		mDBCursor = mCollection.find();
 		mDBCursor.batchSize(pageSize);
 
@@ -88,15 +114,16 @@ public class MongoManager {
 	}
 
 	/*
-	 * Backs up the Data from mongo collection to the HDFS with paging of 2500 documents
+	 * Backs up the Data from mongo collection to the HDFS with paging of 2500
+	 * documents
 	 */
 	public String backupData(String mBackupCollection) {
 		try {
-			
+
 			int pageSize = 2500;
-			
+
 			Boolean mIsHDFSFileWritten;
-			
+
 			mCollection = mAnalysisDatabase.getCollection("MetaData");
 
 			mDBQuery = new BasicDBObject();
@@ -105,13 +132,12 @@ public class MongoManager {
 
 			mDBCursor = mCollection.find(mDBQuery);
 
-			
 			if (mDBCursor.hasNext()) {
 				mDBObject = mDBCursor.next();
 			} else {
 				return null;
 			}
-			
+
 			String mBackupLimit = mDBObject.get("backupLimit").toString();
 
 			mCollection = mAnalysisDatabase.getCollection(mBackupCollection);
@@ -126,37 +152,43 @@ public class MongoManager {
 			Logger.getInstance().logInfo("Mongo Data Backup",
 					"Creating hadoop file for backup");
 
-			mDBCursor.batchSize(pageSize);	// for paging
-			
+			mDBCursor.batchSize(pageSize); // for paging
+
 			int mPageSizeCounter = 0;
-			
+
 			while (mDBCursor.hasNext()) {
 				DBObject mDataObject = mDBCursor.next();
-				
+
 				mPageSizeCounter++;
-				
-				if (mPageSizeCounter > pageSize) {	// if page items are loaded, write it to HDFS and flush buffer
+
+				if (mPageSizeCounter > pageSize) { // if page items are loaded,
+													// write it to HDFS and
+													// flush buffer
 					mHDFSFile = new HadoopFile();
 					mHDFSFile.mTitle = "_back" + mBackupCollection;
 					mHDFSFile.mData = mFileData.toString();
-					
-					Logger.getInstance().logInfo("Mongo Data Backup",
-							"New Hadoop File created with " + mPageSizeCounter + " records");
-					
-					mIsHDFSFileWritten = HadoopManager.getInstance().writeFileToHDFS(mHDFSFile, mBackupCollection, HDFSFileType.MongoBackup);
-					
+
+					Logger.getInstance().logInfo(
+							"Mongo Data Backup",
+							"New Hadoop File created with " + mPageSizeCounter
+									+ " records");
+
+					mIsHDFSFileWritten = HadoopManager.getInstance()
+							.writeFileToHDFS(mHDFSFile, mBackupCollection,
+									HDFSFileType.MongoBackup);
+
 					if (!mIsHDFSFileWritten) {
 						return "Error";
 					}
-					
+
 					mFileData = new StringBuilder();
 					mFileData.append(mDataObject.toString()
 							+ System.getProperty("line.separator"));
-					
+
 					mPageSizeCounter = 0;
 				} else {
-				mFileData.append(mDataObject.toString()
-						+ System.getProperty("line.separator"));
+					mFileData.append(mDataObject.toString()
+							+ System.getProperty("line.separator"));
 				}
 			}
 
@@ -165,11 +197,14 @@ public class MongoManager {
 			mHDFSFile.mTitle = "_back" + mBackupCollection;
 			mHDFSFile.mData = mFileData.toString();
 
-			Logger.getInstance().logInfo("Mongo Data Backup",
-					"New Hadoop File created with " + mPageSizeCounter + " records");
+			Logger.getInstance().logInfo(
+					"Mongo Data Backup",
+					"New Hadoop File created with " + mPageSizeCounter
+							+ " records");
 
-			mIsHDFSFileWritten = HadoopManager.getInstance().writeFileToHDFS(mHDFSFile, mBackupCollection, HDFSFileType.MongoBackup);
-			
+			mIsHDFSFileWritten = HadoopManager.getInstance().writeFileToHDFS(
+					mHDFSFile, mBackupCollection, HDFSFileType.MongoBackup);
+
 			if (!mIsHDFSFileWritten) {
 				return "Error";
 			}
